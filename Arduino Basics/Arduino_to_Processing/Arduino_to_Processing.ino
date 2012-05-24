@@ -21,7 +21,6 @@
  FABLABBCN | Guillem Camprodon
  
 */
- */
 
 import processing.serial.*;
 
