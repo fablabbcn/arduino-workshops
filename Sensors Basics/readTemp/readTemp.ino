@@ -35,7 +35,7 @@ void loop() {
   if (temp > 21.0 && temp <= 22.0) {
     makeRGBFab(255, 0, 0);
   } 
-  else  (temp > 22.0 && temp <= 23.0) {
+  else if (temp > 22.0 && temp <= 23.0) {
     makeRGBFab(0, 0, 255);
   }
   else {
