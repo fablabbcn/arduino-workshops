@@ -19,7 +19,7 @@ void openSerialPort()
 
 void selectSerialPort()
 {
-  String result = (String) JOptionPane.showInputDialog(this, 
+  String result = (String) JOptionPane.showInputDialog(frame, 
   "Select the serial port that corresponds to your Arduino board.", 
   "Select serial port", 
   JOptionPane.PLAIN_MESSAGE, 
@@ -44,6 +44,11 @@ void serialEvent (Serial myPort) {
       arduinoLine = trim(arduinoLine);
 
       dataArduino = split(arduinoLine, ","); 
+      
+      if (dataArduino.length > totalSeries) {
+        println("You are sending too many inputs...");
+        println("Update the number of series!");
+      }
 
       for (int i = 0; i < dataArduino.length; i++) {
         valuesArduino[i] = float(dataArduino[i]);
@@ -58,8 +63,6 @@ void serialEvent (Serial myPort) {
           print('\n');
         }
       }
-
-      serialDraw();
     }
   } 
   catch (Exception e) {
@@ -67,4 +70,3 @@ void serialEvent (Serial myPort) {
     println("Serial error...");
   }
 }
-

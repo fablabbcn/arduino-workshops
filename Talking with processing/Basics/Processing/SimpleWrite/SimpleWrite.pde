@@ -37,7 +37,6 @@ void draw() {
   else {                         // If mouse is not over square,
     fill(0);  
     println("L");
-    // change color and
     myPort.write('L');              // send an L otherwise
   }
   rect(50, 50, 100, 100);         // Draw a square

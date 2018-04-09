@@ -1,6 +1,8 @@
 import processing.serial.*;
 
-int totalSeries = 1;
+// Importante añadir un delay mínimo de 10 millis >> delay(10)
+
+int totalSeries = 1; // Ajustar a la cantidad de valores. 
 
 Serial myPort;        // The serial port
 int xPos = 1;         // horizontal position of the graph
@@ -18,27 +20,25 @@ void setup () {
 }
 
 void draw () {
-}
-
-void serialDraw() {
   drawAllLines();
 }
 
 void drawAllLines() {
   for (int i = 0; i < valuesArduino.length; i++) {
-    drawLine(valuesArduino[i], 1023, 255);
+    float lineColor = getSeriesHue(i, valuesArduino.length);
+    drawLine(valuesArduino[i], 1023, lineColor);
   }
   nextCycle();
 }
 
 float getSeriesHue(int seriesID, int totalSeries) {
-  float hue =  map(seriesID, 0, totalSeries, 0, 255);
+  float hue =  map(seriesID, 0, totalSeries-1, 0, 255);
   return hue;
 }
 
-void drawLine(float inputValue, float max, float seriesColor) {
+void drawLine(float inputValue, float max, float seriesHue) {
   float mappedValue = map(inputValue, 0, max, 5, height);
-  stroke(seriesColor, 255, 255, 160);
+  stroke(seriesHue, 255, 255, 160);
   line(xPos, height, xPos, height - mappedValue);
 }
 
@@ -51,4 +51,3 @@ void nextCycle() {
     xPos++;
   }
 }
-

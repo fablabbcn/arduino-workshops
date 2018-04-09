@@ -19,13 +19,13 @@ void openSerialPort()
 
 void selectSerialPort()
 {
-  String result = (String) JOptionPane.showInputDialog(this, 
-  "Select the serial port that corresponds to your Arduino board.", 
-  "Select serial port", 
-  JOptionPane.PLAIN_MESSAGE, 
-  null, 
-  reverse(Serial.list()), 
-  0);
+  String result = (String) JOptionPane.showInputDialog(frame, 
+    "Select the serial port that corresponds to your Arduino board.", 
+    "Select serial port", 
+    JOptionPane.PLAIN_MESSAGE, 
+    null, 
+    reverse(Serial.list()), 
+    0);
 
   if (result != null) {
     portname = result;
@@ -34,14 +34,7 @@ void selectSerialPort()
 }
 
 void serialEvent (Serial myPort) {
-
-//  if ((1/(millis() - lastSerialReception))/1000 < frameRate) {
-//    println("Too much data being send. Add at least a 100ms delay in your Arduino loop.");
-//    return;
-//  }
-//
-//  lastSerialReception = millis();
-
+      
   try {
 
     String arduinoLine = myPort.readStringUntil('\n'); 
@@ -52,26 +45,27 @@ void serialEvent (Serial myPort) {
 
       dataArduino = split(arduinoLine, ","); 
 
-      for (int i = 0; i < dataArduino.length; i++) {
+      if (dataArduino.length > totalSeries) {
+        println("You are sending too many inputs...");
+        println("Update the number of series!");
+      }
+
+      for (int i = 0; i < totalSeries; i++) {
         valuesArduino[i] = float(dataArduino[i]);
       }
 
-      for (int i = 0; i < valuesArduino.length; i++) {
+      for (int i = 0; i < totalSeries; i++) {
         print(valuesArduino[i]);
         if (i < valuesArduino.length-1) {
           print(" - ");
-        } 
-        else {
+        } else {
           print('\n');
         }
       }
-
-      serialDraw();
     }
   } 
   catch (Exception e) {
     println(e);
-    println("Serial error...");
+    println("Serial error... ");
   }
 }
-

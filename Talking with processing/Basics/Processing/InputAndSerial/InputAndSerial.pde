@@ -1,6 +1,6 @@
 import processing.serial.*;
 
-int totalSeries = 1;
+int totalSeries = 1; 
 
 Serial myPort;        // The serial port
 int xPos = 1;         // horizontal position of the graph
@@ -13,14 +13,13 @@ float[] valuesArduino = new float[totalSeries];
 void setup () {
   size(800, 800);  
   background(255);
+  noStroke();
   selectSerialPort();
 }
 
 void draw () {
-}
-
-void serialDraw() {
+  background(0);
   float sensor1 = valuesArduino[0];
-  ellipse(sensor1, sensor1, 100, 100);
+  fill(255, 0, 0);
+  ellipse(width/2, height/2, sensor1, sensor1);
 }
-
